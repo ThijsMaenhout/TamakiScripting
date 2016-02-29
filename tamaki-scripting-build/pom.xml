@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>tamaki-scripting</artifactId>
+        <groupId>com.tamakicontrol.modules.scripting</groupId>
+        <version>1.8.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>tamaki-scripting-build</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.tamakicontrol.modules.scripting</groupId>
+            <artifactId>tamaki-scripting-client</artifactId>
+            <version>1.8.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tamakicontrol.modules.scripting</groupId>
+            <artifactId>tamaki-scripting-common</artifactId>
+            <version>1.8.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tamakicontrol.modules.scripting</groupId>
+            <artifactId>tamaki-scripting-designer</artifactId>
+            <version>1.8.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tamakicontrol.modules.scripting</groupId>
+            <artifactId>tamaki-scripting-gateway</artifactId>
+            <version>1.8.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.inductiveautomation.ignitionsdk</groupId>
+                <artifactId>ignition-maven-plugin</artifactId>
+                <version>1.0.8</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>modl</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <projectScopes>
+                        <projectScope>
+                            <name>tamaki-scripting-client</name>
+                            <scope>C</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>tamaki-scripting-common</name>
+                            <scope>CDG</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>tamaki-scripting-designer</name>
+                            <scope>CD</scope>
+                        </projectScope>
+                        <projectScope>
+                            <name>tamaki-scripting-gateway</name>
+                            <scope>G</scope>
+                        </projectScope>
+                    </projectScopes>
+
+                    <moduleId>com.tamakicontrol.modules.scripting.tamaki-scripting</moduleId>
+                    <moduleName>${project.parent.name}</moduleName>
+                    <moduleDescription>${project.description}</moduleDescription>
+                    <moduleVersion>1.8.0-SNAPSHOT</moduleVersion>
+                    <requiredIgnitionVersion>7.8.1</requiredIgnitionVersion>
+                    <requiredFrameworkVersion>7</requiredFrameworkVersion>
+
+                    <hooks>
+                        <hook>
+                            <scope>C</scope>
+                            <hookClass>com.tamakicontrol.modules.scripting.client.ClientHook</hookClass>
+                        </hook>
+                        <hook>
+                            <scope>D</scope>
+                            <hookClass>com.tamakicontrol.modules.scripting.designer.DesignerHook</hookClass>
+                        </hook>
+                        <hook>
+                            <scope>G</scope>
+                            <hookClass>com.tamakicontrol.modules.scripting.GatewayHook</hookClass>
+                        </hook>
+                    </hooks>
+
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
