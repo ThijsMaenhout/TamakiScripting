@@ -18,6 +18,7 @@
             <artifactId>tamaki-scripting-client</artifactId>
             <version>1.8.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.tamakicontrol.modules.scripting</groupId>
             <artifactId>tamaki-scripting-common</artifactId>

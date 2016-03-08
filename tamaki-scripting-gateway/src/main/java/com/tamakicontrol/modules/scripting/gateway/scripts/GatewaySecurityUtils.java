@@ -4,7 +4,7 @@ import com.tamakicontrol.modules.scripting.SecurityUtilProvider;
 
 import java.util.List;
 
-public class GatewaySecurityFunctions implements SecurityUtilProvider {
+public class GatewaySecurityUtils implements SecurityUtilProvider {
 
     @Override
     public boolean hasRole(String role) {

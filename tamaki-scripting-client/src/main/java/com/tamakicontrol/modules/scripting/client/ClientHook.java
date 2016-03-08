@@ -6,14 +6,16 @@ import com.inductiveautomation.ignition.common.licensing.LicenseState;
 import com.inductiveautomation.ignition.common.script.ScriptManager;
 import com.inductiveautomation.ignition.common.script.hints.PropertiesFileDocProvider;
 import com.inductiveautomation.vision.api.client.AbstractClientModuleHook;
-import com.tamakicontrol.modules.scripting.SystemUtils;
+import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 
-import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtilities;
+import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtils;
 import com.tamakicontrol.modules.scripting.client.scripts.ClientTagUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ClientHook extends AbstractClientModuleHook {
+
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
     private ClientContext clientContext;
 
@@ -32,16 +34,16 @@ public class ClientHook extends AbstractClientModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", new SystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", new AbstractSystemUtils(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag", new ClientTagUtils(clientContext), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.db", new ClientDBUtilities(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
     }
 
     @Override
     public void configureFunctionFactory(ExpressionFunctionManager factory) {
         super.configureFunctionFactory(factory);
-        factory.addFunction("getUUID","Strings", new SystemUtils.GetUUIDFunction());
-        factory.addFunction("getStackTrace","Strings", new SystemUtils.GetStackTraceFunction());
+        factory.addFunction("getUUID","Strings", new AbstractSystemUtils.GetUUIDFunction());
+        factory.addFunction("getStackTrace","Strings", new AbstractSystemUtils.GetStackTraceFunction());
         factory.addFunction("getParamValue","Advanced", new ClientTagUtils.GetParameterValueFunction());
     }
 
