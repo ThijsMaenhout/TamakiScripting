@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by cmwarre on 3/7/16.
  */
-public interface DBFunctionProvider {
+public interface DBUtilProvider {
 
     public List<List<Object>> runInternalQuery(String query);
 

@@ -1,14 +1,12 @@
-package com.tamakicontrol.modules.scripting.client;
+package com.tamakicontrol.modules.scripting.client.scripts;
 
 import com.inductiveautomation.factorypmi.application.script.builtin.ClientUserUtilities;
-import com.inductiveautomation.ignition.client.model.ClientContext;
 import com.inductiveautomation.ignition.common.user.User;
-import com.tamakicontrol.modules.scripting.SecurityFunctionProvider;
+import com.tamakicontrol.modules.scripting.SecurityUtilProvider;
 
-import java.util.Collection;
 import java.util.List;
 
-public class SecurityFunctions implements SecurityFunctionProvider {
+public class ClientSecurityUtils implements SecurityUtilProvider {
 
     private final ClientUserUtilities userUtilities = new ClientUserUtilities();
 

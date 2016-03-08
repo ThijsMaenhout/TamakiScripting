@@ -5,7 +5,7 @@ import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 
 import java.util.List;
 
-public interface TagFunctionProvider {
+public interface TagUtilProvider {
 
     public Object getParameterValue(String tagPath, String paramName);
 

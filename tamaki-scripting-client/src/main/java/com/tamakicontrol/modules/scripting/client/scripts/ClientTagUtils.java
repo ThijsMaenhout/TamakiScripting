@@ -1,4 +1,4 @@
-package com.tamakicontrol.modules.scripting.client;
+package com.tamakicontrol.modules.scripting.client.scripts;
 
 import com.inductiveautomation.ignition.client.model.ClientContext;
 import com.inductiveautomation.ignition.client.script.ClientTagUtilities;
@@ -9,18 +9,16 @@ import com.inductiveautomation.ignition.common.expressions.ExpressionException;
 import com.inductiveautomation.ignition.common.expressions.functions.AbstractFunction;
 import com.inductiveautomation.ignition.common.model.values.BasicQualifiedValue;
 import com.inductiveautomation.ignition.common.model.values.QualifiedValue;
-import com.inductiveautomation.ignition.common.model.values.Quality;
 import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
-import com.inductiveautomation.ignition.common.sqltags.model.types.DataQuality;
-import com.tamakicontrol.modules.scripting.TagFunctionProvider;
+import com.tamakicontrol.modules.scripting.TagUtilProvider;
 
 import java.util.List;
 
-public class TagFunctions implements TagFunctionProvider {
+public class ClientTagUtils implements TagUtilProvider {
 
     private static ClientTagUtilities clientTagUtilities;
 
-    public TagFunctions(ClientContext c){
+    public ClientTagUtils(ClientContext c){
         if(clientTagUtilities == null)
             clientTagUtilities = new ClientTagUtilities(c.getTagManager());
     }

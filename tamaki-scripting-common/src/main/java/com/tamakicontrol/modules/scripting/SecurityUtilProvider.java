@@ -2,7 +2,7 @@ package com.tamakicontrol.modules.scripting;
 
 import java.util.List;
 
-public interface SecurityFunctionProvider {
+public interface SecurityUtilProvider {
 
     public boolean hasRole(String role);
 

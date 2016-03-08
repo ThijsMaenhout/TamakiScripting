@@ -6,21 +6,22 @@ import com.inductiveautomation.ignition.common.licensing.LicenseState;
 import com.inductiveautomation.ignition.common.script.ScriptManager;
 import com.inductiveautomation.ignition.common.script.hints.PropertiesFileDocProvider;
 import com.inductiveautomation.vision.api.client.AbstractClientModuleHook;
-import com.tamakicontrol.modules.scripting.UtilFunctions;
+import com.tamakicontrol.modules.scripting.SystemUtils;
 
+import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtilities;
+import com.tamakicontrol.modules.scripting.client.scripts.ClientTagUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ClientHook extends AbstractClientModuleHook {
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private TagFunctions tagFunctions;
+    private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
+    private ClientContext clientContext;
 
     @Override
     public void startup(ClientContext context, LicenseState activationState) throws Exception {
         super.startup(context, activationState);
-        tagFunctions = new TagFunctions(context);
+        logger.info("Initializing Tamaki Scripting");
+        this.clientContext = context;
     }
 
     @Override
@@ -31,17 +32,17 @@ public class ClientHook extends AbstractClientModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", new UtilFunctions(), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.tag", tagFunctions, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.db", new ClientDBFunctions(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", new SystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.tag", new ClientTagUtils(clientContext), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.db", new ClientDBUtilities(), new PropertiesFileDocProvider());
     }
 
     @Override
     public void configureFunctionFactory(ExpressionFunctionManager factory) {
         super.configureFunctionFactory(factory);
-        factory.addFunction("getUUID","Strings", new UtilFunctions.GetUUIDFunction());
-        factory.addFunction("getStackTrace","Strings", new UtilFunctions.GetStackTraceFunction());
-        factory.addFunction("getParamValue","Advanced", new TagFunctions.GetParameterValueFunction());
+        factory.addFunction("getUUID","Strings", new SystemUtils.GetUUIDFunction());
+        factory.addFunction("getStackTrace","Strings", new SystemUtils.GetStackTraceFunction());
+        factory.addFunction("getParamValue","Advanced", new ClientTagUtils.GetParameterValueFunction());
     }
 
 }

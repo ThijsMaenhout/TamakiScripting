@@ -1,17 +1,14 @@
-package com.tamakicontrol.modules.scripting;
+package com.tamakicontrol.modules.scripting.gateway.scripts;
 
-import com.inductiveautomation.ignition.common.BasicDataset;
-import com.inductiveautomation.ignition.common.script.builtin.DatasetUtilities;
 import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 import com.inductiveautomation.ignition.gateway.localdb.DBInterface;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
-import com.tamakicontrol.modules.scripting.AbstractDBUtilities;
 
+import com.tamakicontrol.modules.scripting.AbstractDBUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GatewayDBFunctions extends AbstractDBUtilities {

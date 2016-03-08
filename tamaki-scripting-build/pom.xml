@@ -89,7 +89,7 @@
                         </hook>
                         <hook>
                             <scope>G</scope>
-                            <hookClass>com.tamakicontrol.modules.scripting.GatewayHook</hookClass>
+                            <hookClass>com.tamakicontrol.modules.scripting.gateway.GatewayHook</hookClass>
                         </hook>
                     </hooks>
 

@@ -1,8 +1,10 @@
-package com.tamakicontrol.modules.scripting;
+package com.tamakicontrol.modules.scripting.gateway.scripts;
+
+import com.tamakicontrol.modules.scripting.SecurityUtilProvider;
 
 import java.util.List;
 
-public class SecurityFunctions implements SecurityFunctionProvider {
+public class GatewaySecurityFunctions implements SecurityUtilProvider {
 
     @Override
     public boolean hasRole(String role) {

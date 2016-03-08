@@ -1,4 +1,4 @@
-package com.tamakicontrol.modules.scripting;
+package com.tamakicontrol.modules.scripting.gateway;
 
 import com.inductiveautomation.ignition.common.expressions.ExpressionFunctionManager;
 import com.inductiveautomation.ignition.common.licensing.LicenseState;
@@ -7,6 +7,9 @@ import com.inductiveautomation.ignition.common.script.hints.PropertiesFileDocPro
 import com.inductiveautomation.ignition.gateway.clientcomm.ClientReqSession;
 import com.inductiveautomation.ignition.gateway.model.AbstractGatewayModuleHook;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
+import com.tamakicontrol.modules.scripting.SystemUtils;
+import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayDBFunctions;
+import com.tamakicontrol.modules.scripting.gateway.scripts.GatewaySecurityFunctions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,16 +39,16 @@ public class GatewayHook extends AbstractGatewayModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", new UtilFunctions(), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.user", new SecurityFunctions(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", new SystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.user", new GatewaySecurityFunctions(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", dbFunctions, new PropertiesFileDocProvider());
     }
 
     @Override
     public void configureFunctionFactory(ExpressionFunctionManager factory) {
         super.configureFunctionFactory(factory);
-        factory.addFunction("getUUID","Strings", new UtilFunctions.GetUUIDFunction());
-        factory.addFunction("getStackTrace","Strings", new UtilFunctions.GetStackTraceFunction());
+        factory.addFunction("getUUID","Strings", new SystemUtils.GetUUIDFunction());
+        factory.addFunction("getStackTrace","Strings", new SystemUtils.GetStackTraceFunction());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.tamakicontrol.modules.scripting;
 
-public interface UtilFunctionProvider {
+public interface SystemUtilProvider {
 
     public String getUUID();
 

@@ -1,11 +1,18 @@
 package com.tamakicontrol.modules.scripting;
 
+import com.inductiveautomation.ignition.common.BundleUtil;
+
 import java.util.List;
 
-/**
- * Created by cmwarre on 3/8/16.
- */
-public abstract class AbstractDBUtilities implements DBFunctionProvider{
+public abstract class AbstractDBUtilities implements DBUtilProvider {
+
+    static {
+        BundleUtil.get().addBundle(
+                AbstractDBUtilities.class.getSimpleName(),
+                AbstractDBUtilities.class.getClassLoader(),
+                AbstractDBUtilities.class.getName().replace('.', '/')
+        );
+    }
 
     public List<List<Object>> runInternalQuery(String query){
         return runInternalQueryImpl(query);
@@ -17,4 +24,5 @@ public abstract class AbstractDBUtilities implements DBFunctionProvider{
     public List<List<Object>> runPrepInternalQuery(String query, Object[] args) {
         return null;
     }
+
 }

@@ -1,20 +1,17 @@
-package com.tamakicontrol.modules.scripting.client;
+package com.tamakicontrol.modules.scripting.client.scripts;
 
 import com.inductiveautomation.ignition.client.gateway_interface.ModuleRPCFactory;
 import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 import com.tamakicontrol.modules.scripting.AbstractDBUtilities;
-import com.tamakicontrol.modules.scripting.DBFunctionProvider;
+import com.tamakicontrol.modules.scripting.DBUtilProvider;
 
 import java.util.List;
 
-/**
- * Created by cmwarre on 3/8/16.
- */
-public class ClientDBFunctions extends AbstractDBUtilities{
+public class ClientDBUtilities extends AbstractDBUtilities{
 
-    private final DBFunctionProvider rpc = ModuleRPCFactory.create(
+    private final DBUtilProvider rpc = ModuleRPCFactory.create(
             "com.tamakicontrol.modules.scripting",
-            DBFunctionProvider.class
+            AbstractDBUtilities.class
     );
 
     @Override

@@ -1,5 +1,6 @@
 package com.tamakicontrol.modules.scripting;
 
+import com.inductiveautomation.ignition.common.BundleUtil;
 import com.inductiveautomation.ignition.common.expressions.Expression;
 import com.inductiveautomation.ignition.common.expressions.ExpressionException;
 import com.inductiveautomation.ignition.common.expressions.functions.AbstractFunction;
@@ -9,7 +10,15 @@ import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 
 import java.util.UUID;
 
-public class UtilFunctions implements UtilFunctionProvider{
+public class SystemUtils implements SystemUtilProvider {
+
+    static {
+        BundleUtil.get().addBundle(
+                SystemUtils.class.getSimpleName(),
+                SystemUtils.class.getClassLoader(),
+                SystemUtils.class.getName().replace('.', '/')
+        );
+    }
 
     /**
      * Returns a universally unique identifier from java.util.UUID
