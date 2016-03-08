@@ -1,5 +1,7 @@
 package com.tamakicontrol.modules.scripting.designer;
 
+import com.inductiveautomation.ignition.client.script.ClientTagUtilities;
+import com.inductiveautomation.ignition.common.BundleUtil;
 import com.inductiveautomation.ignition.common.expressions.ExpressionFunctionManager;
 import com.inductiveautomation.ignition.common.licensing.LicenseState;
 import com.inductiveautomation.ignition.common.script.ScriptManager;
@@ -7,9 +9,8 @@ import com.inductiveautomation.ignition.common.script.hints.PropertiesFileDocPro
 import com.inductiveautomation.ignition.designer.model.AbstractDesignerModuleHook;
 import com.inductiveautomation.ignition.designer.model.DesignerContext;
 
-import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
-import com.tamakicontrol.modules.scripting.client.scripts.ClientTagUtils;
-import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtils;
+import com.tamakicontrol.modules.scripting.*;
+import com.tamakicontrol.modules.scripting.client.scripts.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,11 @@ public class DesignerHook extends AbstractDesignerModuleHook {
     public void startup(DesignerContext context, LicenseState activationState) throws Exception {
         super.startup(context, activationState);
         designerContext = context;
+
+        BundleUtil.get().addBundle("DBUtils", AbstractDBUtils.class, "DBUtils");
+        BundleUtil.get().addBundle("SecurityUtils", AbstractSecurityUtils.class, "SecurityUtils");
+        BundleUtil.get().addBundle("SystemUtils", AbstractSystemUtils.class, "SystemUtils");
+        BundleUtil.get().addBundle("TagUtils", AbstractTagUtils.class, "TagUtils");
     }
 
     @Override

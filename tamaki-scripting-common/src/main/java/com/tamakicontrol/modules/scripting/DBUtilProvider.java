@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface DBUtilProvider {
 
-    public List<List<Object>> runInternalQuery(String query);
+    List<List<Object>> runInternalQuery(String query);
 
-    public List<List<Object>> runPrepInternalQuery(String query, Object[] args);
+    List<List<Object>> runPrepInternalQuery(String query, Object[] args);
 
 }

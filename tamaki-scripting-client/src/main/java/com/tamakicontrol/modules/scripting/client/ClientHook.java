@@ -9,6 +9,7 @@ import com.inductiveautomation.vision.api.client.AbstractClientModuleHook;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 
 import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtils;
+import com.tamakicontrol.modules.scripting.client.scripts.ClientSecurityUtils;
 import com.tamakicontrol.modules.scripting.client.scripts.ClientTagUtils;
 
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public class ClientHook extends AbstractClientModuleHook {
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
         manager.addScriptModule("system.util", new AbstractSystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.security", new ClientSecurityUtils(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag", new ClientTagUtils(clientContext), new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
     }

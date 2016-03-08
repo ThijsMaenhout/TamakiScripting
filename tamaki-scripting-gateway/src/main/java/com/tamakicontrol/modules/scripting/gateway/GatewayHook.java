@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 public class GatewayHook extends AbstractGatewayModuleHook {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
 
     GatewayContext gatewayContext;
 
@@ -26,7 +26,7 @@ public class GatewayHook extends AbstractGatewayModuleHook {
 
     @Override
     public void startup(LicenseState licenseState) {
-
+        logger.info("Loading Tamaki Scripting Module");
     }
 
     @Override

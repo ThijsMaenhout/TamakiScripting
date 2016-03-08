@@ -4,12 +4,10 @@ import java.util.List;
 
 public interface SecurityUtilProvider {
 
-    public boolean hasRole(String role);
+    boolean hasRole(String role);
 
-    public boolean hasRoles(String roles);
+    boolean hasRoles(String roles);
 
-    public boolean hasRoles(List<String> roles);
-
-    //public void resetPassword(String username);
+    boolean hasRoles(List<String> roles);
 
 }

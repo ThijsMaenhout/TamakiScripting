@@ -2,8 +2,8 @@ package com.tamakicontrol.modules.scripting;
 
 public interface SystemUtilProvider {
 
-    public String getUUID();
+    String getUUID();
 
-    public String getStackTrace();
+    String getStackTrace();
 
 }

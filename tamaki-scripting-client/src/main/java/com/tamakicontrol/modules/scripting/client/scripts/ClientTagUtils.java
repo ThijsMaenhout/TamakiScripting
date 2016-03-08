@@ -10,22 +10,22 @@ import com.inductiveautomation.ignition.common.expressions.functions.AbstractFun
 import com.inductiveautomation.ignition.common.model.values.BasicQualifiedValue;
 import com.inductiveautomation.ignition.common.model.values.QualifiedValue;
 import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
+import com.inductiveautomation.ignition.common.sqltags.model.types.DataQuality;
+import com.tamakicontrol.modules.scripting.AbstractTagUtils;
 import com.tamakicontrol.modules.scripting.TagUtilProvider;
 
-import java.util.List;
-
-public class ClientTagUtils implements TagUtilProvider {
+public class ClientTagUtils extends AbstractTagUtils {
 
     private static ClientTagUtilities clientTagUtilities;
 
     public ClientTagUtils(ClientContext c){
+        //TODO I don't want ClientTagUtiltities to be static
         if(clientTagUtilities == null)
             clientTagUtilities = new ClientTagUtilities(c.getTagManager());
     }
 
     @Override
-    @ScriptFunction(docBundlePrefix = "TagUtils")
-    public Object getParameterValue(String tagPath, String paramName) {
+    protected Object getParameterValueImpl(String tagPath, String paramName) {
         ExtendedPropertySet parameters = (ExtendedPropertySet)clientTagUtilities.read(tagPath + ".ExtendedProperties").getValue();
 
         try {
@@ -37,11 +37,6 @@ public class ClientTagUtils implements TagUtilProvider {
             return null;
         }
 
-        return null;
-    }
-
-    @Override
-    public List<String> getHistoricalTags(String provider, String tagPath) {
         return null;
     }
 
@@ -72,8 +67,10 @@ public class ClientTagUtils implements TagUtilProvider {
                         return new BasicQualifiedValue(param.getValue());
                 }
             }catch(Exception e){
-                //TODO need to have a quality code attached to this
-                return new BasicQualifiedValue(-1);
+                //TODO set quality is deprecated
+                BasicQualifiedValue retValue = new BasicQualifiedValue(-1);
+                retValue.setQuality(DataQuality.OPC_BAD_DATA);
+                return retValue;
             }
 
             return new BasicQualifiedValue(-1);
