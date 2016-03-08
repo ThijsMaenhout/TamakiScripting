@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TagFunctionProvider {
 
-    public QualifiedValue getParameterValue(String tagPath, String paramName);
+    public Object getParameterValue(String tagPath, String paramName);
 
     public List<String> getHistoricalTags(String provider, String tagPath);
 

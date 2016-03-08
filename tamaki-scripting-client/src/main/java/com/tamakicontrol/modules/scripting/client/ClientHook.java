@@ -33,6 +33,7 @@ public class ClientHook extends AbstractClientModuleHook {
         super.initializeScriptManager(manager);
         manager.addScriptModule("system.util", new UtilFunctions(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag", tagFunctions, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.db", new ClientDBFunctions(), new PropertiesFileDocProvider());
     }
 
     @Override
