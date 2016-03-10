@@ -1,6 +1,5 @@
 package com.tamakicontrol.modules.scripting.designer;
 
-import com.inductiveautomation.ignition.client.script.ClientTagUtilities;
 import com.inductiveautomation.ignition.common.BundleUtil;
 import com.inductiveautomation.ignition.common.expressions.ExpressionFunctionManager;
 import com.inductiveautomation.ignition.common.licensing.LicenseState;
@@ -12,6 +11,7 @@ import com.inductiveautomation.ignition.designer.model.DesignerContext;
 import com.tamakicontrol.modules.scripting.*;
 import com.tamakicontrol.modules.scripting.client.scripts.*;
 
+import com.tamakicontrol.modules.scripting.AbstractDBUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ public class DesignerHook extends AbstractDesignerModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", new AbstractSystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", new ClientSystemUtils(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag",  new ClientTagUtils(designerContext), new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
     }

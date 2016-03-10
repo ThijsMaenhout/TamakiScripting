@@ -10,7 +10,7 @@ import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 
 import java.util.UUID;
 
-public class AbstractSystemUtils implements SystemUtilProvider {
+public abstract class AbstractSystemUtils implements SystemUtilProvider {
 
     static {
         BundleUtil.get().addBundle(

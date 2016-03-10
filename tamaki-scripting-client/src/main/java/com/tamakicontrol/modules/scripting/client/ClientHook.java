@@ -1,6 +1,7 @@
 package com.tamakicontrol.modules.scripting.client;
 
 import com.inductiveautomation.ignition.client.model.ClientContext;
+import com.inductiveautomation.ignition.client.script.ClientTagUtilities;
 import com.inductiveautomation.ignition.common.expressions.ExpressionFunctionManager;
 import com.inductiveautomation.ignition.common.licensing.LicenseState;
 import com.inductiveautomation.ignition.common.script.ScriptManager;
@@ -10,6 +11,7 @@ import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 
 import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtils;
 import com.tamakicontrol.modules.scripting.client.scripts.ClientSecurityUtils;
+import com.tamakicontrol.modules.scripting.client.scripts.ClientSystemUtils;
 import com.tamakicontrol.modules.scripting.client.scripts.ClientTagUtils;
 
 import org.slf4j.Logger;
@@ -18,13 +20,21 @@ import org.slf4j.LoggerFactory;
 public class ClientHook extends AbstractClientModuleHook {
 
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
-    private ClientContext clientContext;
+
+    private ClientDBUtils dbUtils;
+    private ClientSecurityUtils securityUtils;
+    private ClientSystemUtils systemUtils;
+    private ClientTagUtils tagUtils;
 
     @Override
     public void startup(ClientContext context, LicenseState activationState) throws Exception {
         super.startup(context, activationState);
-        logger.info("Initializing Tamaki Scripting");
-        this.clientContext = context;
+        logger.info("Initializing Tamaki Scripting Module");
+
+        dbUtils = new ClientDBUtils();
+        securityUtils = new ClientSecurityUtils();
+        systemUtils = new ClientSystemUtils();
+        tagUtils = new ClientTagUtils(context);
     }
 
     @Override
@@ -35,10 +45,10 @@ public class ClientHook extends AbstractClientModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", new AbstractSystemUtils(), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.security", new ClientSecurityUtils(), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.tag", new ClientTagUtils(clientContext), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", systemUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.security", securityUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.tag", tagUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.db", dbUtils, new PropertiesFileDocProvider());
     }
 
     @Override

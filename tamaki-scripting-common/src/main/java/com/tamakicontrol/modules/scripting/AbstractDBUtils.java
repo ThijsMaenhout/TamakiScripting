@@ -13,6 +13,7 @@ public abstract class AbstractDBUtils implements DBUtilProvider {
                 AbstractDBUtils.class.getClassLoader(),
                 AbstractDBUtils.class.getName().replace('.', '/')
         );
+
     }
 
     @Override
