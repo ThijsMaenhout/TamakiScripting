@@ -29,6 +29,7 @@ public class DesignerHook extends AbstractDesignerModuleHook {
         BundleUtil.get().addBundle("SecurityUtils", AbstractSecurityUtils.class, "SecurityUtils");
         BundleUtil.get().addBundle("SystemUtils", AbstractSystemUtils.class, "SystemUtils");
         BundleUtil.get().addBundle("TagUtils", AbstractTagUtils.class, "TagUtils");
+        BundleUtil.get().addBundle("GUIUtils", AbstractGUIUtils.class, "GUIUtils");
     }
 
     @Override
@@ -42,6 +43,7 @@ public class DesignerHook extends AbstractDesignerModuleHook {
         manager.addScriptModule("system.util", new ClientSystemUtils(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag",  new ClientTagUtils(designerContext), new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.gui", new ClientGUIUtils(), new PropertiesFileDocProvider());
     }
 
     @Override

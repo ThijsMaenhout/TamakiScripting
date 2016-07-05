@@ -9,10 +9,7 @@ import com.inductiveautomation.ignition.common.script.hints.PropertiesFileDocPro
 import com.inductiveautomation.vision.api.client.AbstractClientModuleHook;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 
-import com.tamakicontrol.modules.scripting.client.scripts.ClientDBUtils;
-import com.tamakicontrol.modules.scripting.client.scripts.ClientSecurityUtils;
-import com.tamakicontrol.modules.scripting.client.scripts.ClientSystemUtils;
-import com.tamakicontrol.modules.scripting.client.scripts.ClientTagUtils;
+import com.tamakicontrol.modules.scripting.client.scripts.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +22,7 @@ public class ClientHook extends AbstractClientModuleHook {
     private ClientSecurityUtils securityUtils;
     private ClientSystemUtils systemUtils;
     private ClientTagUtils tagUtils;
+    private ClientGUIUtils guiUtils;
 
     @Override
     public void startup(ClientContext context, LicenseState activationState) throws Exception {
@@ -35,6 +33,7 @@ public class ClientHook extends AbstractClientModuleHook {
         securityUtils = new ClientSecurityUtils();
         systemUtils = new ClientSystemUtils();
         tagUtils = new ClientTagUtils(context);
+        guiUtils = new ClientGUIUtils();
     }
 
     @Override
@@ -49,6 +48,7 @@ public class ClientHook extends AbstractClientModuleHook {
         manager.addScriptModule("system.security", securityUtils, new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag", tagUtils, new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", dbUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.gui", guiUtils, new PropertiesFileDocProvider());
     }
 
     @Override
