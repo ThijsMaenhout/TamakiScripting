@@ -1,5 +1,8 @@
 package com.tamakicontrol.modules.scripting;
 
+import com.inductiveautomation.ignition.common.BundleUtil;
+import com.inductiveautomation.ignition.common.script.hints.ScriptArg;
+import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.io.RandomAccessBufferedFileInputStream;
 import org.apache.pdfbox.pdfparser.PDFParser;
@@ -14,32 +17,51 @@ import java.io.IOException;
 
 public class AbstractPDFUtils implements PDFUtilProvider {
 
+    static {
+        BundleUtil.get().addBundle(
+                AbstractPDFUtils.class.getSimpleName(),
+                AbstractPDFUtils.class.getClassLoader(),
+                AbstractPDFUtils.class.getName().replace('.', '/')
+        );
+    }
+
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripts");
 
     @Override
-    public String getPDFText(String filepath) {
-        return getPDFTextImpl(filepath);
+    @ScriptFunction(docBundlePrefix = "PDFUtils")
+    public String getPDFText(@ScriptArg("filepath") String filePath) {
+        return getPDFTextImpl(filePath);
     }
 
-    protected String getPDFTextImpl(String filepath){
+    protected String getPDFTextImpl(String filePath){
 
         PDFTextStripper pdfStripper = null;
         PDDocument pdDoc = null;
         COSDocument cosDoc = null;
-        File file = new File(filepath);
+        File file = new File(filePath);
         String parsedText = null;
-
+        RandomAccessBufferedFileInputStream fileInputStream = null;
         try {
-            RandomAccessBufferedFileInputStream fileInputStream = new RandomAccessBufferedFileInputStream(file);
+            fileInputStream = new RandomAccessBufferedFileInputStream(file);
             PDFParser parser = new PDFParser(fileInputStream);
             parser.parse();
             cosDoc = parser.getDocument();
             pdfStripper = new PDFTextStripper();
             pdDoc = new PDDocument(cosDoc);
             parsedText = pdfStripper.getText(pdDoc);
-            fileInputStream.close();
         } catch (IOException e) {
             logger.error(e.getStackTrace().toString());
+        }finally {
+            try {
+                if(pdDoc != null)
+                    pdDoc.close();
+                if(cosDoc != null)
+                    cosDoc.close();
+                if(fileInputStream != null)
+                    fileInputStream.close();
+            }catch (IOException e){
+                logger.error(e.getStackTrace().toString());
+            }
         }
 
         return parsedText;
