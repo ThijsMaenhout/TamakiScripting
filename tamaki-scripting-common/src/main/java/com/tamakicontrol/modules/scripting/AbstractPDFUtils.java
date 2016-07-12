@@ -30,14 +30,14 @@ public class AbstractPDFUtils implements PDFUtilProvider {
         String parsedText = null;
 
         try {
-            PDFParser parser = new PDFParser(new RandomAccessBufferedFileInputStream(file));
+            RandomAccessBufferedFileInputStream fileInputStream = new RandomAccessBufferedFileInputStream(file);
+            PDFParser parser = new PDFParser(fileInputStream);
             parser.parse();
             cosDoc = parser.getDocument();
             pdfStripper = new PDFTextStripper();
             pdDoc = new PDDocument(cosDoc);
-            pdfStripper.setStartPage(1);
-            pdfStripper.setEndPage(5);
             parsedText = pdfStripper.getText(pdDoc);
+            fileInputStream.close();
         } catch (IOException e) {
             logger.error(e.getStackTrace().toString());
         }
