@@ -23,6 +23,7 @@ public class ClientHook extends AbstractClientModuleHook {
     private ClientSystemUtils systemUtils;
     private ClientTagUtils tagUtils;
     private ClientGUIUtils guiUtils;
+    private ClientPDFUtils pdfUtils;
 
     @Override
     public void startup(ClientContext context, LicenseState activationState) throws Exception {
@@ -34,6 +35,7 @@ public class ClientHook extends AbstractClientModuleHook {
         systemUtils = new ClientSystemUtils();
         tagUtils = new ClientTagUtils(context);
         guiUtils = new ClientGUIUtils();
+        pdfUtils = new ClientPDFUtils();
     }
 
     @Override
@@ -49,6 +51,7 @@ public class ClientHook extends AbstractClientModuleHook {
         manager.addScriptModule("system.tag", tagUtils, new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", dbUtils, new PropertiesFileDocProvider());
         manager.addScriptModule("system.gui", guiUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.pdf", pdfUtils, new PropertiesFileDocProvider());
     }
 
     @Override

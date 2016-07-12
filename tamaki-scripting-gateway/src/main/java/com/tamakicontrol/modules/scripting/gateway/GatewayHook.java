@@ -9,6 +9,7 @@ import com.inductiveautomation.ignition.gateway.model.AbstractGatewayModuleHook;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayDBUtils;
+import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayPDFUtils;
 import com.tamakicontrol.modules.scripting.gateway.scripts.GatewaySecurityUtils;
 import com.tamakicontrol.modules.scripting.gateway.scripts.GatewaySystemUtils;
 import org.slf4j.Logger;
@@ -21,12 +22,14 @@ public class GatewayHook extends AbstractGatewayModuleHook {
     private GatewayDBUtils dbUtils;
     private GatewaySecurityUtils securityUtils;
     private GatewaySystemUtils systemUtils;
+    private GatewayPDFUtils pdfUtils;
 
     @Override
     public void setup(GatewayContext gatewayContext) {
         dbUtils = new GatewayDBUtils(gatewayContext);
         securityUtils = new GatewaySecurityUtils();
         systemUtils = new GatewaySystemUtils();
+        pdfUtils = new GatewayPDFUtils();
     }
 
     @Override
@@ -45,6 +48,7 @@ public class GatewayHook extends AbstractGatewayModuleHook {
         manager.addScriptModule("system.util", systemUtils, new PropertiesFileDocProvider());
         manager.addScriptModule("system.user", securityUtils, new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", dbUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.pdf", pdfUtils, new PropertiesFileDocProvider());
     }
 
     @Override

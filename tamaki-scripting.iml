@@ -8,12 +8,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="tamaki-scripting-client" />
-    <orderEntry type="module" module-name="tamaki-scripting-common" />
-    <orderEntry type="library" name="Maven: org.apache.pdfbox:pdfbox:2.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.pdfbox:fontbox:2.0.2" level="project" />
-    <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
-    <orderEntry type="module" module-name="tamaki-scripting-designer" />
-    <orderEntry type="module" module-name="tamaki-scripting-gateway" />
   </component>
 </module>

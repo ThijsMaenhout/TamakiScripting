@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.inductiveautomation.ignition:designer:7.8.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inductiveautomation/ignition/designer/7.8.1-SNAPSHOT/designer-7.8.1-20160127.213717-297.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inductiveautomation/ignition/designer/7.8.1-SNAPSHOT/designer-7.8.1-20160127.213717-297-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inductiveautomation/ignition/designer/7.8.1-SNAPSHOT/designer-7.8.1-20160127.213717-297-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

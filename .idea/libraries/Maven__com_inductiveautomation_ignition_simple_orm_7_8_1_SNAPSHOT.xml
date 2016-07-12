@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.inductiveautomation.ignition:simple-orm:7.8.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inductiveautomation/ignition/simple-orm/7.8.1-SNAPSHOT/simple-orm-7.8.1-20160127.213728-297.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inductiveautomation/ignition/simple-orm/7.8.1-SNAPSHOT/simple-orm-7.8.1-20160127.213728-297-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inductiveautomation/ignition/simple-orm/7.8.1-SNAPSHOT/simple-orm-7.8.1-20160127.213728-297-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
