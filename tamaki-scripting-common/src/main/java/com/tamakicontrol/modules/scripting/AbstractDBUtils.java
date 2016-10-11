@@ -32,4 +32,19 @@ public abstract class AbstractDBUtils implements DBUtilProvider {
 
     protected abstract List<List<Object>> runPrepInternalQueryImpl(String query, Object[] args);
 
+    @Override
+    public int runInternalUpdateQuery(String query) {
+        return runInternalUpdateQueryImpl(query);
+    }
+
+    protected abstract int runInternalUpdateQueryImpl(String query);
+
+    @Override
+    @ScriptFunction(docBundlePrefix = "DBUtils")
+    public int runPrepInternalUpdateQuery(String query, Object[] args){
+        return runPrepInternalUpdateQueryImpl(query, args);
+    }
+
+    protected abstract int runPrepInternalUpdateQueryImpl(String query, Object[] args);
+
 }

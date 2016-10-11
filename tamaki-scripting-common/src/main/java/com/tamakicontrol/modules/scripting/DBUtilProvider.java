@@ -8,4 +8,8 @@ public interface DBUtilProvider {
 
     List<List<Object>> runPrepInternalQuery(String query, Object[] args);
 
+    int runInternalUpdateQuery(String query);
+
+    int runPrepInternalUpdateQuery(String query, Object[] args);
+
 }

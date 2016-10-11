@@ -13,7 +13,7 @@ public class ClientDBUtils extends AbstractDBUtils {
 
     public ClientDBUtils(){
        rpc = ModuleRPCFactory.create(
-                "com.tamakicontrol.modules.tamaki-scripting",
+                "com.tamakicontrol.modules.scripting.tamaki-scripting",
                 DBUtilProvider.class
         );
 
@@ -25,6 +25,19 @@ public class ClientDBUtils extends AbstractDBUtils {
     }
 
     @Override
-    protected List<List<Object>> runPrepInternalQueryImpl(String query, Object[] args){ return rpc.runPrepInternalQuery(query, args); }
+    protected List<List<Object>> runPrepInternalQueryImpl(String query, Object[] args){
+        return rpc.runPrepInternalQuery(query, args);
+    }
+
+    @Override
+    protected int runInternalUpdateQueryImpl(String query) {
+        return rpc.runInternalUpdateQuery(query);
+    }
+
+    @Override
+    protected int runPrepInternalUpdateQueryImpl(String query, Object[] args) {
+        return rpc.runPrepInternalUpdateQuery(query, args);
+    }
+
 
 }
