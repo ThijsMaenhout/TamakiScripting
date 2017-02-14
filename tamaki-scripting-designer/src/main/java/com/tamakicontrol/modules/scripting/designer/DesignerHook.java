@@ -31,6 +31,8 @@ public class DesignerHook extends AbstractDesignerModuleHook {
         BundleUtil.get().addBundle("TagUtils", AbstractTagUtils.class, "TagUtils");
         BundleUtil.get().addBundle("GUIUtils", AbstractGUIUtils.class, "GUIUtils");
         BundleUtil.get().addBundle("PDFUtils", AbstractPDFUtils.class, "PDFUtils");
+
+        TamakiTaskQueue.initialize();
     }
 
     @Override

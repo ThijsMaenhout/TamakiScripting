@@ -7,6 +7,8 @@ import com.inductiveautomation.ignition.common.expressions.functions.AbstractFun
 import com.inductiveautomation.ignition.common.model.values.BasicQualifiedValue;
 import com.inductiveautomation.ignition.common.model.values.QualifiedValue;
 import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
+import org.python.core.PyObject;
+import com.tamakicontrol.modules.scripting.TamakiTaskQueue;
 
 import java.util.UUID;
 
@@ -88,5 +90,13 @@ public abstract class AbstractSystemUtils implements SystemUtilProvider {
 
     }
 
+    @Override
+    public void addToTaskQueue(PyObject object) {
+        addToTaskQueueImpl(object);
+    }
+
+    protected void addToTaskQueueImpl(PyObject object){
+        TamakiTaskQueue.getInstance().addTaskToQueue(object);
+    }
 }
 

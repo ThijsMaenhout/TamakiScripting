@@ -8,6 +8,7 @@ import com.inductiveautomation.ignition.gateway.clientcomm.ClientReqSession;
 import com.inductiveautomation.ignition.gateway.model.AbstractGatewayModuleHook;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
+import com.tamakicontrol.modules.scripting.TamakiTaskQueue;
 import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayDBUtils;
 import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayPDFUtils;
 import com.tamakicontrol.modules.scripting.gateway.scripts.GatewaySecurityUtils;
@@ -30,6 +31,8 @@ public class GatewayHook extends AbstractGatewayModuleHook {
         securityUtils = new GatewaySecurityUtils();
         systemUtils = new GatewaySystemUtils();
         pdfUtils = new GatewayPDFUtils();
+
+        TamakiTaskQueue.initialize();
     }
 
     @Override

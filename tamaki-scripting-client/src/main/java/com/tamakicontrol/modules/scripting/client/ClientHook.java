@@ -9,6 +9,7 @@ import com.inductiveautomation.ignition.common.script.hints.PropertiesFileDocPro
 import com.inductiveautomation.vision.api.client.AbstractClientModuleHook;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 
+import com.tamakicontrol.modules.scripting.TamakiTaskQueue;
 import com.tamakicontrol.modules.scripting.client.scripts.*;
 
 import org.slf4j.Logger;
@@ -36,6 +37,8 @@ public class ClientHook extends AbstractClientModuleHook {
         tagUtils = new ClientTagUtils(context);
         guiUtils = new ClientGUIUtils();
         pdfUtils = new ClientPDFUtils();
+
+        TamakiTaskQueue.initialize();
     }
 
     @Override
