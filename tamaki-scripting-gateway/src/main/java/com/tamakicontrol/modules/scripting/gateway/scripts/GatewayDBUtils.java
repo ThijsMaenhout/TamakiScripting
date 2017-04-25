@@ -16,9 +16,7 @@ public class GatewayDBUtils extends AbstractDBUtils {
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
     private GatewayContext context;
 
-    public GatewayDBUtils(GatewayContext context) {
-        this.context = context;
-    }
+    public GatewayDBUtils(GatewayContext _context) {context = _context;}
 
     @Override
     public List<List<Object>> runInternalQueryImpl(String query) {

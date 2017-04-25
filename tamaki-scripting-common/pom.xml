@@ -7,7 +7,7 @@
     <parent>
         <artifactId>tamaki-scripting</artifactId>
         <groupId>com.tamakicontrol.modules.scripting</groupId>
-        <version>1.8.0-SNAPSHOT</version>
+        <version>1.9.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>tamaki-scripting-common</artifactId>

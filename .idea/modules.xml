@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/client-launcher/client-launcher.iml" filepath="$PROJECT_DIR$/client-launcher/client-launcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/designer-launcher/designer-launcher.iml" filepath="$PROJECT_DIR$/designer-launcher/designer-launcher.iml" />
       <module fileurl="file://$PROJECT_DIR$/tamaki-scripting.iml" filepath="$PROJECT_DIR$/tamaki-scripting.iml" />
       <module fileurl="file://$PROJECT_DIR$/tamaki-scripting-build/tamaki-scripting-build.iml" filepath="$PROJECT_DIR$/tamaki-scripting-build/tamaki-scripting-build.iml" />
       <module fileurl="file://$PROJECT_DIR$/tamaki-scripting-client/tamaki-scripting-client.iml" filepath="$PROJECT_DIR$/tamaki-scripting-client/tamaki-scripting-client.iml" />

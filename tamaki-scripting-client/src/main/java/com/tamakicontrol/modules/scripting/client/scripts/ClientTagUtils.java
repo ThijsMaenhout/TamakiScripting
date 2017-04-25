@@ -8,20 +8,27 @@ import com.inductiveautomation.ignition.common.expressions.Expression;
 import com.inductiveautomation.ignition.common.expressions.ExpressionException;
 import com.inductiveautomation.ignition.common.expressions.functions.AbstractFunction;
 import com.inductiveautomation.ignition.common.model.values.BasicQualifiedValue;
+import com.inductiveautomation.ignition.common.model.values.BasicQuality;
 import com.inductiveautomation.ignition.common.model.values.QualifiedValue;
+import com.inductiveautomation.ignition.common.model.values.Quality;
 import com.inductiveautomation.ignition.common.script.hints.ScriptFunction;
 import com.inductiveautomation.ignition.common.sqltags.model.types.DataQuality;
+import com.inductiveautomation.ignition.common.sqltags.model.types.TagQuality;
 import com.tamakicontrol.modules.scripting.AbstractTagUtils;
 import com.tamakicontrol.modules.scripting.TagUtilProvider;
 
+import static com.inductiveautomation.ignition.common.sqltags.model.TagProp.Quality;
+
 public class ClientTagUtils extends AbstractTagUtils {
 
+    // Get inductive client tag utilities
     private static ClientTagUtilities clientTagUtilities;
 
-    public ClientTagUtils(ClientContext c){
-        //TODO I don't want ClientTagUtiltities to be static
+    public ClientTagUtils(){}
+
+    public static synchronized void initialize(ClientContext c){
         if(clientTagUtilities == null)
-            clientTagUtilities = new ClientTagUtilities(c.getTagManager());
+            clientTagUtilities = new ClientTagUtilities(c);
     }
 
     @Override
@@ -67,9 +74,8 @@ public class ClientTagUtils extends AbstractTagUtils {
                         return new BasicQualifiedValue(param.getValue());
                 }
             }catch(Exception e){
-                //TODO set quality is deprecated
                 BasicQualifiedValue retValue = new BasicQualifiedValue(-1);
-                retValue.setQuality(DataQuality.OPC_BAD_DATA);
+                retValue.setQuality(TagQuality.BAD);
                 return retValue;
             }
 

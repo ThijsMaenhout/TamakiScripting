@@ -2,6 +2,8 @@ package com.tamakicontrol.modules.scripting.client;
 
 import com.inductiveautomation.ignition.client.model.ClientContext;
 import com.inductiveautomation.ignition.client.script.ClientTagUtilities;
+import com.inductiveautomation.ignition.common.BasicDataset;
+import com.inductiveautomation.ignition.common.Dataset;
 import com.inductiveautomation.ignition.common.expressions.ExpressionFunctionManager;
 import com.inductiveautomation.ignition.common.licensing.LicenseState;
 import com.inductiveautomation.ignition.common.script.ScriptManager;
@@ -19,26 +21,13 @@ public class ClientHook extends AbstractClientModuleHook {
 
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
 
-    private ClientDBUtils dbUtils;
-    private ClientSecurityUtils securityUtils;
-    private ClientSystemUtils systemUtils;
-    private ClientTagUtils tagUtils;
-    private ClientGUIUtils guiUtils;
-    private ClientPDFUtils pdfUtils;
-
     @Override
     public void startup(ClientContext context, LicenseState activationState) throws Exception {
         super.startup(context, activationState);
         logger.info("Initializing Tamaki Scripting Module");
 
-        dbUtils = new ClientDBUtils();
-        securityUtils = new ClientSecurityUtils();
-        systemUtils = new ClientSystemUtils();
-        tagUtils = new ClientTagUtils(context);
-        guiUtils = new ClientGUIUtils();
-        pdfUtils = new ClientPDFUtils();
-
-        TamakiTaskQueue.initialize();
+        ClientTagUtils.initialize(context);
+        TamakiTaskQueue.initialize(10);
     }
 
     @Override
@@ -49,12 +38,15 @@ public class ClientHook extends AbstractClientModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", systemUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.security", securityUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.tag", tagUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.db", dbUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.gui", guiUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.pdf", pdfUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", new ClientSystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.security", new ClientSecurityUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.tag", new ClientTagUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.gui", new ClientGUIUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.pdf", new ClientPDFUtils(), new PropertiesFileDocProvider());
+
+        Dataset test = new BasicDataset();
+        test.getColumnNames();
     }
 
     @Override

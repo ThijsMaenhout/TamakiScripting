@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>tamaki-scripting</artifactId>
+        <groupId>com.tamakicontrol.modules.scripting</groupId>
+        <version>1.9.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>designer-launcher</artifactId>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.inductiveautomation.ignitionsdk</groupId>
+            <artifactId>designer-api</artifactId>
+            <version>${ignition-sdk-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.ignitionsdk</groupId>
+            <artifactId>vision-designer-api</artifactId>
+            <version>${ignition-sdk-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.ignition</groupId>
+            <artifactId>client-bootstrap</artifactId>
+            <version>${ignition-sdk-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tamakicontrol.modules.scripting</groupId>
+            <artifactId>tamaki-scripting-designer</artifactId>
+            <version>1.9.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.inductiveautomation.ignitionsdk</groupId>
+            <artifactId>designer-launcher</artifactId>
+            <version>${ignition-sdk-version}</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
+</project>

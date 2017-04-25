@@ -6,15 +6,14 @@ import org.python.core.PyObject;
 public class TamakiTaskQueue {
 
     private static TamakiTaskQueue instance;
-    private final BasicExecutionEngine taskQueue = new BasicExecutionEngine(4, "Tamaki Execution Engine");
+    private final BasicExecutionEngine taskQueue;
 
-    public TamakiTaskQueue(){
+    public TamakiTaskQueue(int numThreads){
+        taskQueue = new BasicExecutionEngine(numThreads, "Tamaki Execution Engine");
     }
 
-    public static void initialize(){
-        synchronized (instance){
-            instance = new TamakiTaskQueue();
-        }
+    public static synchronized void initialize(int numThreads){
+        instance = new TamakiTaskQueue(numThreads);
     }
 
     public static TamakiTaskQueue getInstance(){

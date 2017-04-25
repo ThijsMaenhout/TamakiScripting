@@ -30,6 +30,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="client-launcher" target="1.5" />
+      <module name="designer-launcher" target="1.5" />
       <module name="tamaki-scripting" target="1.5" />
       <module name="tamaki-scripting-build" target="1.5" />
       <module name="tamaki-scripting-client" target="1.6" />

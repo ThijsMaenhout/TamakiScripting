@@ -18,12 +18,10 @@ import org.slf4j.LoggerFactory;
 public class DesignerHook extends AbstractDesignerModuleHook {
 
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
-    private DesignerContext designerContext;
 
     @Override
     public void startup(DesignerContext context, LicenseState activationState) throws Exception {
         super.startup(context, activationState);
-        designerContext = context;
 
         BundleUtil.get().addBundle("DBUtils", AbstractDBUtils.class, "DBUtils");
         BundleUtil.get().addBundle("SecurityUtils", AbstractSecurityUtils.class, "SecurityUtils");
@@ -32,7 +30,8 @@ public class DesignerHook extends AbstractDesignerModuleHook {
         BundleUtil.get().addBundle("GUIUtils", AbstractGUIUtils.class, "GUIUtils");
         BundleUtil.get().addBundle("PDFUtils", AbstractPDFUtils.class, "PDFUtils");
 
-        TamakiTaskQueue.initialize();
+        TamakiTaskQueue.initialize(10);
+        ClientTagUtils.initialize(context);
     }
 
     @Override
@@ -43,11 +42,17 @@ public class DesignerHook extends AbstractDesignerModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
+        logger.info("Initalizing Utility Scripts");
         manager.addScriptModule("system.util", new ClientSystemUtils(), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.tag",  new ClientTagUtils(designerContext), new PropertiesFileDocProvider());
+        logger.info("Initalizing Tag Scripts");
+        manager.addScriptModule("system.tag", new ClientTagUtils(), new PropertiesFileDocProvider());
+        logger.info("Initalizing DB Scripts");
         manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
+        logger.info("Initalizing GUI Scripts");
         manager.addScriptModule("system.gui", new ClientGUIUtils(), new PropertiesFileDocProvider());
+        logger.info("Initalizing PDF Scripts");
         manager.addScriptModule("system.pdf", new ClientPDFUtils(), new PropertiesFileDocProvider());
+
     }
 
     @Override

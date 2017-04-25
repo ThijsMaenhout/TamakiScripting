@@ -9,30 +9,24 @@ import com.inductiveautomation.ignition.gateway.model.AbstractGatewayModuleHook;
 import com.inductiveautomation.ignition.gateway.model.GatewayContext;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 import com.tamakicontrol.modules.scripting.TamakiTaskQueue;
-import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayDBUtils;
-import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayPDFUtils;
-import com.tamakicontrol.modules.scripting.gateway.scripts.GatewaySecurityUtils;
-import com.tamakicontrol.modules.scripting.gateway.scripts.GatewaySystemUtils;
+import com.tamakicontrol.modules.scripting.gateway.scripts.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class GatewayHook extends AbstractGatewayModuleHook {
 
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripts");
-
-    private GatewayDBUtils dbUtils;
-    private GatewaySecurityUtils securityUtils;
-    private GatewaySystemUtils systemUtils;
-    private GatewayPDFUtils pdfUtils;
+    private GatewayContext context;
 
     @Override
     public void setup(GatewayContext gatewayContext) {
-        dbUtils = new GatewayDBUtils(gatewayContext);
-        securityUtils = new GatewaySecurityUtils();
-        systemUtils = new GatewaySystemUtils();
-        pdfUtils = new GatewayPDFUtils();
+        this.context = gatewayContext;
 
-        TamakiTaskQueue.initialize();
+        try {
+            TamakiTaskQueue.initialize(10);
+        }catch (Exception e){
+            logger.error("Exception thrown while setting up task queue", e);
+        }
     }
 
     @Override
@@ -48,10 +42,10 @@ public class GatewayHook extends AbstractGatewayModuleHook {
     @Override
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
-        manager.addScriptModule("system.util", systemUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.user", securityUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.db", dbUtils, new PropertiesFileDocProvider());
-        manager.addScriptModule("system.pdf", pdfUtils, new PropertiesFileDocProvider());
+        manager.addScriptModule("system.util", new GatewaySystemUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.user", new GatewaySecurityUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.db", new GatewayDBUtils(context), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.pdf", new GatewayPDFUtils(), new PropertiesFileDocProvider());
     }
 
     @Override
@@ -63,6 +57,6 @@ public class GatewayHook extends AbstractGatewayModuleHook {
 
     @Override
     public Object getRPCHandler(ClientReqSession session, Long projectId) {
-        return dbUtils;
+        return new GatewayRPCHandler(this.context);
     }
 }

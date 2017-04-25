@@ -7,7 +7,7 @@
     <parent>
         <artifactId>tamaki-scripting</artifactId>
         <groupId>com.tamakicontrol.modules.scripting</groupId>
-        <version>1.8.0-SNAPSHOT</version>
+        <version>1.9.0-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -20,22 +20,22 @@
         <dependency>
             <groupId>com.tamakicontrol.modules.scripting</groupId>
             <artifactId>tamaki-scripting-client</artifactId>
-            <version>1.8.0-SNAPSHOT</version>
+            <version>1.9.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.tamakicontrol.modules.scripting</groupId>
             <artifactId>tamaki-scripting-common</artifactId>
-            <version>1.8.0-SNAPSHOT</version>
+            <version>1.9.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.tamakicontrol.modules.scripting</groupId>
             <artifactId>tamaki-scripting-designer</artifactId>
-            <version>1.8.0-SNAPSHOT</version>
+            <version>1.9.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.tamakicontrol.modules.scripting</groupId>
             <artifactId>tamaki-scripting-gateway</artifactId>
-            <version>1.8.0-SNAPSHOT</version>
+            <version>1.9.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -51,6 +51,13 @@
                         <phase>package</phase>
                         <goals>
                             <goal>modl</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>install-modl</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>post</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -76,10 +83,10 @@
                     </projectScopes>
 
                     <moduleId>com.tamakicontrol.modules.scripting.tamaki-scripting</moduleId>
-                    <moduleName>${project.parent.name}</moduleName>
+                    <moduleName>Tamaki Scripting</moduleName>
                     <moduleDescription>${project.description}</moduleDescription>
-                    <moduleVersion>1.8.0.${maven.build.timestamp}</moduleVersion>
-                    <requiredIgnitionVersion>7.8.0</requiredIgnitionVersion>
+                    <moduleVersion>1.9.0.${maven.build.timestamp}</moduleVersion>
+                    <requiredIgnitionVersion>7.9.0</requiredIgnitionVersion>
                     <requiredFrameworkVersion>7</requiredFrameworkVersion>
                     <freeModule>true</freeModule>
 
