@@ -1,1 +1,16 @@
 # Created by .ignore support plugin (hsz.mobi)
+.idea/
+client-launcher/.idea/
+designer-launcher-launcher/.idea/
+tamaki-scripting-build/.idea/
+tamaki-scripting-client/.idea/
+tamaki-scripting-designer/.idea/
+tamaki-scripting-common/.idea/
+tamaki-scripting-gateway/.idea/
+client-launcher/src/
+designer-launcher/src/
+tamaki-scripting-build/target/
+tamaki-scripting-client/target/
+tamaki-scripting-common/target/
+tamaki-scripting-designer/target/
+tamaki-scripting-gateway/target/
