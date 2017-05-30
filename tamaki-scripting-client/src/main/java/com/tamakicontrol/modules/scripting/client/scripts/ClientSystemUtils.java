@@ -17,8 +17,8 @@ public class ClientSystemUtils extends AbstractSystemUtils {
         );
     }
 
-    @Override
-    protected Object runAtGatewayImpl(PyObject object) {
-        return rpc.runAtGateway(object);
-    }
+//    @Override
+//    protected Object runAtGatewayImpl(PyObject object) {
+//        return rpc.runAtGateway(object);
+//    }
 }

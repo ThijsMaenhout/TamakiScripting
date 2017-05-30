@@ -82,7 +82,7 @@
                         </projectScope>
                     </projectScopes>
 
-                    <moduleId>com.tamakicontrol.modules.scripting.tamaki-scripting</moduleId>
+                    <moduleId>com.tamakicontrol.modules.scripting</moduleId>
                     <moduleName>Tamaki Scripting</moduleName>
                     <moduleDescription>${project.description}</moduleDescription>
                     <moduleVersion>1.9.0.${maven.build.timestamp}</moduleVersion>

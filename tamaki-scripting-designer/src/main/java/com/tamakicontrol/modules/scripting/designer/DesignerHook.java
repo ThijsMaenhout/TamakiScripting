@@ -58,6 +58,7 @@ public class DesignerHook extends AbstractDesignerModuleHook {
     @Override
     public void configureFunctionFactory(ExpressionFunctionManager factory) {
         super.configureFunctionFactory(factory);
+        logger.info("Setting up function factory");
         factory.addFunction("getUUID","Strings", new AbstractSystemUtils.GetUUIDFunction());
         factory.addFunction("getStackTrace","Strings", new AbstractSystemUtils.GetStackTraceFunction());
         factory.addFunction("getParamValue","Advanced", new ClientTagUtils.GetParameterValueFunction());

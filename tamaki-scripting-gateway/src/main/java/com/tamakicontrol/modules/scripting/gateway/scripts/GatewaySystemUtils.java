@@ -5,8 +5,8 @@ import org.python.core.PyObject;
 
 
 public class GatewaySystemUtils extends AbstractSystemUtils {
-    @Override
-    protected Object runAtGatewayImpl(PyObject object) {
-        return object.__call__();
-    }
+//    @Override
+//    protected Object runAtGatewayImpl(PyObject object) {
+//        return object.__call__();
+//    }
 }

@@ -21,11 +21,9 @@ public class GatewayRPCHandler {
         systemUtils = new GatewaySystemUtils();
     }
 
-
-    public Object runAtGateway(PyObject object) {
-        return systemUtils.runAtGateway(object);
-    }
-
+//    public Object runAtGateway(PyObject object) {
+//        return systemUtils.runAtGateway(object);
+//    }
 
     public List<List<Object>> runInternalQuery(String query) {
         return dbUtils.runInternalQuery(query);

@@ -100,11 +100,11 @@ public abstract class AbstractSystemUtils implements SystemUtilProvider {
         TamakiTaskQueue.getInstance().addTaskToQueue(object);
     }
 
-    @Override
-    public Object runAtGateway(PyObject object) {
-        return runAtGatewayImpl(object);
-    }
-
-    protected abstract Object runAtGatewayImpl(PyObject object);
+//    @Override
+//    public Object runAtGateway(PyObject object) {
+//        return runAtGatewayImpl(object);
+//    }
+//
+//    protected abstract Object runAtGatewayImpl(PyObject object);
 }
 

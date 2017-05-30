@@ -10,6 +10,7 @@ import com.inductiveautomation.ignition.gateway.model.GatewayContext;
 import com.tamakicontrol.modules.scripting.AbstractSystemUtils;
 import com.tamakicontrol.modules.scripting.TamakiTaskQueue;
 import com.tamakicontrol.modules.scripting.gateway.scripts.*;
+import com.tamakicontrol.modules.scripting.gateway.servlets.ScriptingResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,9 @@ public class GatewayHook extends AbstractGatewayModuleHook {
         }catch (Exception e){
             logger.error("Exception thrown while setting up task queue", e);
         }
+
+        logger.info("Setting up Tamaki API Servlet");
+        gatewayContext.addServlet("api", ScriptingResource.class);
     }
 
     @Override
@@ -37,6 +41,7 @@ public class GatewayHook extends AbstractGatewayModuleHook {
     @Override
     public void shutdown() {
         logger.info("Stopping Tamaki Scripts Module");
+        context.removeServlet("api");
     }
 
     @Override

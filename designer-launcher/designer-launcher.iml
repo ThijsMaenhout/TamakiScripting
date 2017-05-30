@@ -61,6 +61,9 @@
     <orderEntry type="library" name="Maven: org.apache.pdfbox:pdfbox:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.pdfbox:fontbox:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.poi:poi:3.16" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-collections4:4.1" level="project" />
     <orderEntry type="library" name="Maven: com.inductiveautomation.alarmnotification:alarm-notification-designer:4.9.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.inductiveautomation.alarmnotification:alarm-notification-common:4.9.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.inductiveautomation.alarmnotification:alarm-notification-client:4.9.2" level="project" />
@@ -110,8 +113,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.icepdf:icepdf-core:5.0.7" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.inductiveautomation.reporting:reporting-common:4.9.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.reportmill:tools-jar:14.9.5" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.poi:poi:3.14" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Maven: com.inductiveautomation.serial:serial-support-client:4.9.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: ignition.Modules.serial-support:serial-support-common:unspecified" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.serialio:serialio:8.9.0" level="project" />

@@ -10,6 +10,6 @@ public interface SystemUtilProvider {
 
     void addToTaskQueue(PyObject object);
 
-    Object runAtGateway(PyObject object);
+    //Object runAtGateway(PyObject object);
 
 }
