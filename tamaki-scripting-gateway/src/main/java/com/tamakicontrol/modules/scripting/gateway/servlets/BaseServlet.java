@@ -9,6 +9,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
+import sun.security.provider.MD5;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +40,8 @@ public abstract class BaseServlet extends HttpServlet {
     public static final String METHOD_DELETE = "DELETE";
 
     private HashMap<String, HashMap<String, ServletResource>> router = new HashMap<>();
+    //private ArrayList<AbstractServletResource> router = new ArrayList<>();
+    //private HashMap<String, AbstractServletResource> router = new HashMap<>();
     private ServletResource defaultResource;
 
     public abstract String getUriBase();
@@ -55,7 +59,6 @@ public abstract class BaseServlet extends HttpServlet {
         for (String route : router.keySet()) {
 
             if (req.getRequestURI().matches(getUriBase() + route)) {
-
                 if (router.get(route).containsKey(requestMethod))
                     resource = router.get(route).get(requestMethod);
                 else
@@ -111,18 +114,17 @@ public abstract class BaseServlet extends HttpServlet {
         }
     }
 
-    public boolean validateSecurity(HttpServletRequest req){
+
+    public AuthenticatedUser getRequestUser(HttpServletRequest req){
 
         String authString = req.getHeader("Authorization");
 
-
         if(authString == null)
-            return false;
+            return null;
 
         String authType = authString.substring(0, 5);
         if(authType.equalsIgnoreCase("basic")){
             try {
-
 
                 String userPassEncoded = authString.substring(6);
                 String credentials = new String(Base64.decodeBase64(userPassEncoded), "UTF-8");
@@ -142,20 +144,25 @@ public abstract class BaseServlet extends HttpServlet {
                     // TODO add role based security to API
                     //user.getRoles().contains()
 
-                    return user != null;
+                    // TODO add token authentication?
+                    //user.
+
+                    return user;
                 }
 
             } catch (IOException e){
-              return false;
+                return null;
 
             } catch (Exception e){
-                return false;
+                return null;
             }
         }
 
+        return null;
+    }
 
-
-        return false;
+    public boolean validateSecurity(HttpServletRequest req){
+        return getRequestUser(req) != null;
     }
 
     public ServletResource getDefaultResource(){

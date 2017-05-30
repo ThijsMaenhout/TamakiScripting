@@ -3,13 +3,16 @@ package com.tamakicontrol.modules.scripting.gateway.servlets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import com.inductiveautomation.ignition.common.script.builtin.AbstractDBUtilities;
+import com.inductiveautomation.ignition.common.model.values.QualifiedValue;
+import com.inductiveautomation.ignition.common.model.values.Quality;
 import com.inductiveautomation.ignition.common.script.builtin.DatasetUtilities;
 import com.inductiveautomation.ignition.common.sqltags.model.TagPath;
 import com.inductiveautomation.ignition.common.sqltags.model.types.TagValue;
 import com.inductiveautomation.ignition.common.sqltags.parser.TagPathParser;
 import com.inductiveautomation.ignition.gateway.datasource.BasicStreamingDataset;
-import com.inductiveautomation.ignition.gateway.util.DBUtilities;
+import com.inductiveautomation.ignition.gateway.sqltags.model.BasicAsyncWriteRequest;
+import com.inductiveautomation.ignition.gateway.sqltags.model.BasicWriteRequest;
+import com.inductiveautomation.ignition.gateway.sqltags.model.WriteRequest;
 import com.tamakicontrol.modules.scripting.AbstractDatasetUtils;
 import com.tamakicontrol.modules.utils.ArgumentMap;
 import com.tamakicontrol.modules.utils.JsonHistoryQueryParams;
@@ -20,11 +23,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.zip.GZIPOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-
+//TODO add/edit/remove tags
+//TODO query tag calculations
+//TODO alarm.queryStatus, ack
+//TODO user.getRoles, getUsers
+//TODO sendEmail
+//TODO run queries
+//TODO add/edit/remove devices
+//TODO documentation and comments
 public class ScriptingResource extends BaseServlet {
 
     @Override
@@ -41,6 +50,7 @@ public class ScriptingResource extends BaseServlet {
     public void init() throws ServletException {
         super.init();
 
+        //TODO make api browseable.  Give instructions, parameters, examples.
         addResource("/hello", METHOD_GET, helloWorldResource);
         addResource("/echo", METHOD_POST, echoResource);
         addResource("/tag/queryTagHistory", METHOD_POST, queryTagHistoryResource);
@@ -85,6 +95,12 @@ public class ScriptingResource extends BaseServlet {
     private ServletResource queryTagHistoryResource = new ServletResource() {
         @Override
         public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
+
+            if(!validateSecurity(req)){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
             BufferedReader reader = req.getReader();
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
             JsonHistoryQueryParams queryParams = gson.fromJson(reader, JsonHistoryQueryParams.class);
@@ -135,30 +151,18 @@ public class ScriptingResource extends BaseServlet {
     * */
     private ServletResource postReadTagResource = new ServletResource() {
 
-        class TagResourceParameters {
+        class TagResourceParameters extends JsonResourceParameters {
             private String tagPath = "";
             private transient TagPath _tagPath = null;
 
             private void build() throws IOException{
-                _tagPath = TagPathParser.parse("default", "Ignition157", tagPath);
-            }
-
-            private void setTagPath(String tagPath){
-                this.tagPath = tagPath;
-            }
-
-            private String getTagPath(){
-                return tagPath;
+                //TODO null pointer exception here...
+                //_tagPath = TagPathParser.parse("default", getSystemName(), tagPath);
+                _tagPath = TagPathParser.parse(tagPath);
             }
 
             private TagPath getQualifiedTagPath(){
                 return _tagPath;
-            }
-
-            @Override
-            public String toString() {
-                Gson gson = new Gson();
-                return gson.toJson(this);
             }
         }
 
@@ -188,10 +192,15 @@ public class ScriptingResource extends BaseServlet {
         }
     };
 
-
     private ServletResource getReadTagResource = new ServletResource() {
         @Override
         public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
+
+            if(!validateSecurity(req)){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
             ArgumentMap args = getRequestParams(req.getQueryString());
             String tagPath = args.getStringArg("tagPath");
             TagPath path = TagPathParser.parse("default", getSystemName(), tagPath);
@@ -221,23 +230,146 @@ public class ScriptingResource extends BaseServlet {
     };
 
     private ServletResource readAllTagResource = new ServletResource() {
+
+        class ReadAllTagResourceParams extends JsonResourceParameters {
+
+            private List<String> tagPaths;
+            private transient List<TagPath> _tagPaths;
+
+
+            public void build() throws IOException{
+                List<TagPath>__tagPaths = new ArrayList<>();
+
+                for(String tagPath : tagPaths){
+                    __tagPaths.add(TagPathParser.parse(tagPath));
+                }
+
+                this._tagPaths = __tagPaths;
+            }
+
+            public List<TagPath> getQualifiedTagPaths(){
+                return _tagPaths;
+            }
+
+        }
+
         @Override
         public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
+            if(!validateSecurity(req)){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
 
+            Gson gson = new Gson();
+            ReadAllTagResourceParams params = gson.fromJson(req.getReader(), ReadAllTagResourceParams.class);
+            params.build();
+
+            List<QualifiedValue> values = getContext().getTagManager().read(params.getQualifiedTagPaths());
+
+            resp.setContentType("application/json");
+            resp.getWriter().write(gson.toJson(values));
         }
     };
 
     private ServletResource writeTagResource = new ServletResource() {
+
+        class WriteTagResourceParams extends JsonResourceParameters {
+            private String tagPath = "";
+            private transient TagPath _tagPath = null;
+
+            private Object value;
+
+            public void build() throws IOException{
+                //TODO null pointer exception here
+                //_tagPath = TagPathParser.parse("default", getSystemName(), tagPath);
+                _tagPath = TagPathParser.parse(tagPath);
+            }
+
+            public TagPath getQualifiedTagPath(){
+                return _tagPath;
+            }
+
+            public Object getValue(){
+                return value;
+            }
+        }
+
         @Override
         public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
 
+            if(!validateSecurity(req)){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            Gson gson = new Gson();
+            WriteTagResourceParams params = gson.fromJson(req.getReader(), WriteTagResourceParams.class);
+            params.build();
+
+            @SuppressWarnings("unchecked")
+            List<WriteRequest<TagPath>> writeRequests = new ArrayList<>();
+            writeRequests.add(new BasicAsyncWriteRequest<>(params.getQualifiedTagPath(), params.getValue()));
+
+            List<Quality> results = getContext().getTagManager().write(writeRequests, getRequestUser(req), false);
+
+            resp.setContentType("application/json");
+            resp.getWriter().write(gson.toJson(results));
         }
     };
 
     private ServletResource writeAllTagResource = new ServletResource() {
+
+        class WriteTagsResourceParams extends JsonResourceParameters {
+
+            private List<String> tagPaths;
+            private List<Object> values;
+            private transient List<TagPath> _tagPaths;
+
+
+            public void build() throws IOException{
+                List<TagPath>__tagPaths = new ArrayList<>();
+
+                for(String tagPath : tagPaths){
+                    //TODO null pointer exception here
+                    //__tagPaths.add(TagPathParser.parse("default", getSystemName(), tagPath));
+                    __tagPaths.add(TagPathParser.parse(tagPath));
+                }
+
+                this._tagPaths = __tagPaths;
+            }
+
+            public List<TagPath> getQualifiedTagPaths(){
+                return _tagPaths;
+            }
+
+            public List<Object> getValues(){
+                return values;
+            }
+
+        }
+
         @Override
         public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
 
+            if(!validateSecurity(req)){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            Gson gson = new Gson();
+            WriteTagsResourceParams params = gson.fromJson(req.getReader(), WriteTagsResourceParams.class);
+            params.build();
+
+            List<WriteRequest<TagPath>> writeRequests = new ArrayList<>();
+            for(int i=0; i < params.getQualifiedTagPaths().size(); i++){
+                writeRequests.add(new BasicWriteRequest<>(
+                        params.getQualifiedTagPaths().get(i), params.getValues().get(i)));
+            }
+
+            List<Quality> results = getContext().getTagManager().write(writeRequests, getRequestUser(req), false);
+
+            resp.setContentType("application/json");
+            resp.getWriter().write(gson.toJson(results));
         }
     };
 
