@@ -19,7 +19,7 @@ public class HistoricalTagPathParser{
     public static QualifiedPath parse(String tagPath, String defaultDatasource, String defaultTagProvider,
                                               String defaultSystemName){
 
-        String dataSource = "unknown", tagProvider="unknown", sysName="unknown", path="unknown";
+        String dataSource="unknown", tagProvider="unknown", sysName="unknown", path="unknown";
 
         //tagPath.matches("\\[.*\\].*")
         Matcher notDefaults = Pattern.compile("^\\[(.*)\\](.*)$").matcher(tagPath);

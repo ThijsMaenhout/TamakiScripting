@@ -3,6 +3,8 @@ package com.tamakicontrol.modules.scripting;
 import com.inductiveautomation.ignition.common.execution.impl.BasicExecutionEngine;
 import org.python.core.PyObject;
 
+import java.util.concurrent.Future;
+
 public class TamakiTaskQueue {
 
     private static TamakiTaskQueue instance;
@@ -27,6 +29,11 @@ public class TamakiTaskQueue {
                 task.__call__();
             }
         });
+    }
+
+    //TODO implement this god damnit.  Will need a conventional java execution engine instead of inductives
+    public Future<Object> execute(final PyObject task){
+        return null;
     }
 
 }

@@ -12,6 +12,7 @@ import org.python.core.PyObject;
 import com.tamakicontrol.modules.scripting.TamakiTaskQueue;
 
 import java.util.UUID;
+import java.util.concurrent.*;
 
 public abstract class AbstractSystemUtils implements SystemUtilProvider {
 
@@ -101,6 +102,22 @@ public abstract class AbstractSystemUtils implements SystemUtilProvider {
     }
 
 //    @Override
+//    public Future<Object> getFutureValue(final PyObject object) {
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1,1,1,TimeUnit.DAYS, new ArrayBlockingQueue<Runnable>(10));
+//
+//        threadPoolExecutor.submit(new Callable<Object>() {
+//            @Override
+//            public Object call() {
+//                return object.__call__();
+//            }
+//        });
+//
+//        threadPoolExecutor.execute();
+//
+//    };
+
+
+    //    @Override
 //    public Object runAtGateway(PyObject object) {
 //        return runAtGatewayImpl(object);
 //    }

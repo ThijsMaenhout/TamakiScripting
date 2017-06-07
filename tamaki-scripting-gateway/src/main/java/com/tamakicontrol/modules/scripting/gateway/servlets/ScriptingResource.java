@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.inductiveautomation.ignition.common.model.values.QualifiedValue;
 import com.inductiveautomation.ignition.common.model.values.Quality;
 import com.inductiveautomation.ignition.common.script.builtin.DatasetUtilities;
+import com.inductiveautomation.ignition.common.sqltags.model.TagNode;
 import com.inductiveautomation.ignition.common.sqltags.model.TagPath;
 import com.inductiveautomation.ignition.common.sqltags.model.types.TagValue;
 import com.inductiveautomation.ignition.common.sqltags.parser.TagPathParser;
@@ -14,6 +15,7 @@ import com.inductiveautomation.ignition.gateway.sqltags.model.BasicAsyncWriteReq
 import com.inductiveautomation.ignition.gateway.sqltags.model.BasicWriteRequest;
 import com.inductiveautomation.ignition.gateway.sqltags.model.WriteRequest;
 import com.tamakicontrol.modules.scripting.AbstractDatasetUtils;
+import com.tamakicontrol.modules.scripting.gateway.scripts.GatewayDBUtils;
 import com.tamakicontrol.modules.utils.ArgumentMap;
 import com.tamakicontrol.modules.utils.JsonHistoryQueryParams;
 
@@ -34,6 +36,7 @@ import java.util.List;
 //TODO run queries
 //TODO add/edit/remove devices
 //TODO documentation and comments
+//TODO run internal query
 public class ScriptingResource extends BaseServlet {
 
     @Override
@@ -60,6 +63,7 @@ public class ScriptingResource extends BaseServlet {
         addResource("/tag/readAll", METHOD_POST, readAllTagResource);
         addResource("/tag/write", METHOD_POST, writeTagResource);
         addResource("/tag/writeAll", METHOD_POST, writeAllTagResource);
+        addResource("/db/runInternalQuery", METHOD_POST, runInternalQueryResource);
     }
 
     private String getSystemName(){
@@ -89,6 +93,15 @@ public class ScriptingResource extends BaseServlet {
 
         }
     };
+
+//    private ServletResource addTagResource = new ServletResource() {
+//        @Override
+//        public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
+//            getContext().getTagManager().getTagProvider().addTags();
+//            TagNode tagNode =
+//
+//        }
+//    };
 
 
     //TODO Require fully qualified tag paths or find a way to provide defaults?
@@ -372,6 +385,44 @@ public class ScriptingResource extends BaseServlet {
             resp.getWriter().write(gson.toJson(results));
         }
     };
+
+
+    //TODO implement this?  Or is it a security risk???
+    private ServletResource runInternalQueryResource = new ServletResource() {
+
+        class InternalQueryParams{
+            public String query;
+            public List<String> args;
+        }
+
+        @Override
+        public void doRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IllegalArgumentException {
+
+            if(!validateSecurity(req)){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            Gson gson = new Gson();
+            InternalQueryParams params = gson.fromJson(req.getReader(), InternalQueryParams.class);
+
+            //TODO check this much better
+            String query = params.query;
+            query.toLowerCase();
+            if(query.contains("update") || query.contains("insert") || query.contains("drop")){
+                resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+
+            GatewayDBUtils dbUtils = new GatewayDBUtils(getContext());
+            List<List<Object>> data = dbUtils.runInternalQuery(params.query);
+                    //dbUtils.runPrepInternalQuery(params.query, params.args.toArray());
+
+            resp.setContentType("application/json");
+            resp.getWriter().write(gson.toJson(data));
+        }
+    };
+
+
 
 }
 
