@@ -22,9 +22,9 @@ public class GatewayRPCHandler {
     }
 
 
-    public Object runAtGateway(PyObject object) {
-        return systemUtils.runAtGateway(object);
-    }
+//    public Object runAtGateway(PyObject object) {
+//        return systemUtils.runAtGateway(object);
+//    }
 
 
     public List<List<Object>> runInternalQuery(String query) {

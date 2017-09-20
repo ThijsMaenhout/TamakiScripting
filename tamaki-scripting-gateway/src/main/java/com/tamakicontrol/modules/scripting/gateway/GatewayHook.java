@@ -59,4 +59,9 @@ public class GatewayHook extends AbstractGatewayModuleHook {
     public Object getRPCHandler(ClientReqSession session, Long projectId) {
         return new GatewayRPCHandler(this.context);
     }
+
+    @Override
+    public boolean isFreeModule() {
+        return true;
+    }
 }

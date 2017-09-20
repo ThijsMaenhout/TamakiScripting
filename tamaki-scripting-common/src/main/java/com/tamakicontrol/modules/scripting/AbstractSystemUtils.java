@@ -29,10 +29,13 @@ public abstract class AbstractSystemUtils implements SystemUtilProvider {
      * @return String - Universally unique identifier
      */
     @ScriptFunction(docBundlePrefix = "SystemUtils")
-    public String getUUID(){
+    public String getUUID() throws Exception{
         return UUID.randomUUID().toString();
     }
 
+    /**
+     * Ignition expression function to return a universally unique identifier from java.util.UUID
+     */
     public static class GetUUIDFunction extends AbstractFunction{
 
         @Override
@@ -63,10 +66,13 @@ public abstract class AbstractSystemUtils implements SystemUtilProvider {
      * @return String - Java stack trace for the currently running thread
      */
     @ScriptFunction(docBundlePrefix = "SystemUtils")
-    public String getStackTrace(){
+    public String getStackTrace() throws Exception{
         return Thread.currentThread().getStackTrace()[0].toString();
     }
 
+    /**
+     * Ignition function to return a stack trace string for the currently running thread
+     */
     public static class GetStackTraceFunction extends AbstractFunction{
 
         @Override
@@ -92,19 +98,32 @@ public abstract class AbstractSystemUtils implements SystemUtilProvider {
     }
 
     @Override
-    public void addToTaskQueue(PyObject object) {
+    public void addToTaskQueue(PyObject object) throws Exception {
         addToTaskQueueImpl(object);
     }
 
-    protected void addToTaskQueueImpl(PyObject object){
+    protected void addToTaskQueueImpl(PyObject object) throws Exception {
         TamakiTaskQueue.getInstance().addTaskToQueue(object);
     }
 
     @Override
-    public Object runAtGateway(PyObject object) {
+    public void clearTaskQueue() throws Exception {
+        TamakiTaskQueue.getInstance();
+    }
+
+    @Override
+    public int getTaskQueueLength() throws Exception {
+        return 0;
+    }
+
+    @Override
+    public Object runAtGateway(PyObject object) throws Exception {
         return runAtGatewayImpl(object);
     }
 
-    protected abstract Object runAtGatewayImpl(PyObject object);
+    //TODO implement this
+    protected Object runAtGatewayImpl(PyObject object) throws Exception {
+        throw new Exception("Function is not yet implemented");
+    }
 }
 

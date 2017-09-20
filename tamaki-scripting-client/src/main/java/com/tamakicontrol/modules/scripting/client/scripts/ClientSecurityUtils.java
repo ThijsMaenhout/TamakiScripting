@@ -1,6 +1,7 @@
 package com.tamakicontrol.modules.scripting.client.scripts;
 
 import com.inductiveautomation.factorypmi.application.script.builtin.ClientUserUtilities;
+import com.inductiveautomation.ignition.client.model.ClientContext;
 import com.inductiveautomation.ignition.common.user.User;
 import com.tamakicontrol.modules.scripting.SecurityUtilProvider;
 
@@ -9,6 +10,12 @@ import java.util.List;
 public class ClientSecurityUtils implements SecurityUtilProvider {
 
     private final ClientUserUtilities userUtilities = new ClientUserUtilities();
+
+    private final ClientContext context;
+
+    public ClientSecurityUtils(ClientContext context){
+        this.context = context;
+    }
 
     @Override
     public boolean hasRole(String role) {

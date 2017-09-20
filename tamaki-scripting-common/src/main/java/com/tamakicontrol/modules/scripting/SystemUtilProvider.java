@@ -4,12 +4,16 @@ import org.python.core.PyObject;
 
 public interface SystemUtilProvider {
 
-    String getUUID();
+    String getUUID() throws Exception;
 
-    String getStackTrace();
+    String getStackTrace() throws Exception;
 
-    void addToTaskQueue(PyObject object);
+    void addToTaskQueue(PyObject object) throws Exception;
 
-    Object runAtGateway(PyObject object);
+    void clearTaskQueue() throws Exception;
+
+    int getTaskQueueLength() throws Exception;
+
+    Object runAtGateway(PyObject object) throws Exception;
 
 }

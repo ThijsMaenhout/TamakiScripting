@@ -21,10 +21,14 @@ public class ClientHook extends AbstractClientModuleHook {
 
     private final Logger logger = LoggerFactory.getLogger("Tamaki Scripting");
 
+    private ClientContext clientContext;
+
     @Override
     public void startup(ClientContext context, LicenseState activationState) throws Exception {
         super.startup(context, activationState);
         logger.info("Initializing Tamaki Scripting Module");
+
+        clientContext = context;
 
         ClientTagUtils.initialize(context);
         TamakiTaskQueue.initialize(10);
@@ -39,7 +43,7 @@ public class ClientHook extends AbstractClientModuleHook {
     public void initializeScriptManager(ScriptManager manager) {
         super.initializeScriptManager(manager);
         manager.addScriptModule("system.util", new ClientSystemUtils(), new PropertiesFileDocProvider());
-        manager.addScriptModule("system.security", new ClientSecurityUtils(), new PropertiesFileDocProvider());
+        manager.addScriptModule("system.security", new ClientSecurityUtils(clientContext), new PropertiesFileDocProvider());
         manager.addScriptModule("system.tag", new ClientTagUtils(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.db", new ClientDBUtils(), new PropertiesFileDocProvider());
         manager.addScriptModule("system.gui", new ClientGUIUtils(), new PropertiesFileDocProvider());
